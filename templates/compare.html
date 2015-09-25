@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row">
+  <div class="col-md-12">
+    <h1 class="text-center">Package comparison for {{ tags[tag]['friendly_name'] }}</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-striped table-hover table-condensed" style="margin: 0 auto !important; float;">
+      <thead>
+        <tr>
+          <th>Package</th>
+          {% for release in releases %}
+          {% if tag in release %}
+          <th><a href="{{ releases[release]['url'] }}">{{ releases[release]['friendly_name'] }}</a></th>
+          {% endif %}
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for package in packages %}
+        <tr>
+          <td>{{ package }}</td>
+          {% for release in releases %}
+          {% if tag in release %}
+          <td>{{ packages[package][release]['version']|truncate(length=25) if packages[package][release]['version'] }}-{{ packages[package][release]['release']|truncate(length=25) if packages[package][release]['release'] }}</td>
+          {% endif %}
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

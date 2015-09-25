@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row">
+  <div class="col-md-12 text-center">
+    <h1><a href="{{ releases[repository]['url'] }}">{{ releases[repository]['friendly_name'] }}</a></h1>
+    <small class="text-center">Based on <a href="{{ releases[repository]['url'] }}">{{ releases[repository]['url'] }}</a></small>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-striped table-hover table-condensed" style="margin: 0 auto !important; float;">
+      <thead>
+        <tr>
+          <th>Package</th>
+          <th>Build date</th>
+          <th>Version</th>
+          <th>Release</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for package in packages %}
+        {% if 'src' not in package.arch %}
+        <tr>
+          <td>{{ package.name }}</td>
+          <td>{{ package.buildtime|datetime }}</td>
+          <td>{{ package.version }}</td>
+          <td>{{ package.release|truncate }}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
