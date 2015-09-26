@@ -45,7 +45,8 @@ def compare(tag):
     # The params we're interested to compare
     params = ['name', 'release', 'version']
 
-    # TODO: I don't like part, it works but needs improvement
+    # TODO: I don't like part, it works but needs improvement. Move to a function ?
+    # Retrieve 'params' of each package of each release
     packages = collections.OrderedDict()
     for release in settings.RELEASES:
         if tag in release:
@@ -56,6 +57,9 @@ def compare(tag):
                 for param in params:
                     packages[package.name][release][param] = getattr(package,
                                                                      param)
+
+    # Match package versions for each release to highlight differences
+    packages = utils.diff_packages(packages, tag)
 
     return render_template('compare.html', releases=settings.RELEASES,
                            tags=settings.TAGS, tag=tag, packages=packages)

@@ -64,3 +64,31 @@ def get_packages_from_repo(version):
     packages = q_avail.run()
 
     return packages
+
+def diff_packages(packages, tag):
+    """
+    Iterates over a list of packages dictionaries and highlights differences, if any.
+    Returns the same dictionary with an extra key to show if there are differences.
+    """
+    # TODO: I don't like part, it works but needs improvement.
+    # Highlight package differences, if any
+    for package in packages:
+        compare_version = ""
+        for release in settings.RELEASES:
+            if tag in release:
+                packages[package]['different'] = False
+                try:
+                    full_version = packages[package][release]['version'] + packages[package][release]['release']
+                except KeyError:
+                    # Package exists in at least one release and doesn't exist in at least one release
+                    packages[package]['different'] = True
+                if not compare_version:
+                    # Establish a base for comparison
+                    compare_version = full_version
+                if compare_version == full_version:
+                    # Version for this release is identical to the last one compared against
+                    continue
+                else:
+                    # Version for this release is not identical to the last one compared against
+                    packages[package]['different'] = True
+    return packages
