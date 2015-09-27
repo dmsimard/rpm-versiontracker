@@ -17,7 +17,9 @@ import datetime
 import collections
 from flask import Flask, render_template
 from flask_restful import Api
+
 from versiontracker.api.repositories import Repositories
+from versiontracker.api.packages import Packages
 
 from versiontracker import utils
 from versiontracker import settings
@@ -28,6 +30,12 @@ api.add_resource(Repositories,
                  '/repositories',
                  '/repositories/<string:repository>',
                  '/repositories/<string:repository>/<string:param>')
+
+api.add_resource(Packages,
+                 '/packages/<string:repository>',
+                 '/packages/<string:repository>/<string:package>',
+                 '/packages/<string:repository>/<string:package>/<string:param>')
+
 
 # Jinja Filters
 @app.template_filter('datetime')
@@ -49,11 +57,11 @@ def main():
                            tags=settings.TAGS)
 
 
-@app.route('/packages/<repository>')
-def packages(repository):
+@app.route('/details/<repository>')
+def details(repository):
     """ Returns the list of packages for <repository> """
     packages = utils.get_packages_from_repo(repository)
-    return render_template('packages.html', repositories=settings.REPOSITORIES,
+    return render_template('details.html', repositories=settings.REPOSITORIES,
                            tags=settings.TAGS, repository=repository,
                            packages=packages)
 

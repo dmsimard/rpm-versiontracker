@@ -65,5 +65,9 @@ TAGS = collections.OrderedDict({
     }
 })
 
+# http://dnf.readthedocs.org/en/latest/api_package.html
+PACKAGE_PARAMS = ['arch', 'buildtime', 'downloadsize', 'epoch', 'files', 'installtime', 'installsize', 'name',
+                  'release', 'sourcerpm', 'version']
+
 if os.path.exists(os.path.join(BASE_DIR, 'local_settings.py')):
     from versiontracker.local_settings import *
