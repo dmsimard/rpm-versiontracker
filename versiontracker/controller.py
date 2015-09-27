@@ -16,11 +16,18 @@ import datetime
 
 import collections
 from flask import Flask, render_template
+from flask_restful import Api
+from versiontracker.api.repositories import Repositories
 
 from versiontracker import utils
 from versiontracker import settings
 
 app = Flask(__name__)
+api = Api(app)
+api.add_resource(Repositories,
+                 '/repositories',
+                 '/repositories/<string:repository>',
+                 '/repositories/<string:repository>/<string:param>')
 
 # Jinja Filters
 @app.template_filter('datetime')
