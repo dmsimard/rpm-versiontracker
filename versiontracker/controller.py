@@ -45,7 +45,7 @@ def jinja_truncate_string(string, length=40):
 # App routing
 @app.route('/')
 def main():
-    return render_template('home.html', releases=settings.RELEASES,
+    return render_template('home.html', repositories=settings.REPOSITORIES,
                            tags=settings.TAGS)
 
 
@@ -53,7 +53,7 @@ def main():
 def packages(repository):
     """ Returns the list of packages for <repository> """
     packages = utils.get_packages_from_repo(repository)
-    return render_template('packages.html', releases=settings.RELEASES,
+    return render_template('packages.html', repositories=settings.REPOSITORIES,
                            tags=settings.TAGS, repository=repository,
                            packages=packages)
 
@@ -65,22 +65,22 @@ def compare(tag):
     # The params we're interested to compare
     params = ['name', 'release', 'version']
 
-    # TODO: I don't like part, it works but needs improvement. Move to a function ?
+    # TODO: I don't like this part, it works but needs improvement. Move to a function ?
     # Retrieve 'params' of each package of each release
     packages = collections.OrderedDict()
-    for release in settings.RELEASES:
-        if tag in release:
-            release_packages = utils.get_packages_from_repo(release)
-            for package in release_packages:
+    for repository in settings.REPOSITORIES:
+        if tag in repository:
+            repository_packages = utils.get_packages_from_repo(repository)
+            for package in repository_packages:
                 if package.name not in packages:
                     packages[package.name] = collections.defaultdict(dict)
                 for param in params:
-                    packages[package.name][release][param] = getattr(package,
+                    packages[package.name][repository][param] = getattr(package,
                                                                      param)
 
     # Match package versions for each release to highlight differences
     packages = utils.diff_packages(packages, tag)
 
-    return render_template('compare.html', releases=settings.RELEASES,
+    return render_template('compare.html', repositories=settings.REPOSITORIES,
                            tags=settings.TAGS, tag=tag, packages=packages)
 

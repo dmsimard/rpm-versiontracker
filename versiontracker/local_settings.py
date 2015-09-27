@@ -26,40 +26,44 @@ import os
 # BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # An ordered dict is recommended to have a consistent display experience but is not required.
-# Adding a release in the following format will make it available in the top menu automatically.
-# RELEASES = collections.OrderedDict({
-#    'liberty-master': {
-#        'name': 'liberty-master',
-#        'friendly_name': 'Liberty (master)',
-#        'url':  'http://trunk.rdoproject.org/centos7-liberty/current/delorean.repo'
-#    },
-#    'liberty-master-ci': {
-#        'name': 'liberty-master-ci',
-#        'friendly_name': 'Liberty (CI tested)',
-#        'url':  'http://trunk.rdoproject.org/centos7-liberty/current-passed-ci/delorean.repo'
-#    },
-#    'kilo-master': {
-#        'name': 'kilo-master',
-#        'friendly_name': 'Kilo (master)',
-#        'url': 'http://trunk.rdoproject.org/centos7-kilo/current/delorean-kilo.repo'
-#    },
-#    'kilo-master-ci': {
-#        'name': 'kilo-master-ci',
-#        'friendly_name': 'Kilo (CI tested)',
-#        'url': 'http://trunk.rdoproject.org/centos7-kilo/current-passed-ci/delorean-kilo.repo'
-#    }
+# Adding a repository in the following format will make it available in the top menu automatically.
+# REPOSITORIES = collections.OrderedDict({
+#     'liberty-master': {
+#         'name': 'liberty-master',
+#         'friendly_name': 'Liberty (master)',
+#         'url':  'http://trunk.rdoproject.org/centos7-liberty/current/delorean.repo'
+#     },
+#     'liberty-master-ci': {
+#         'name': 'liberty-master-ci',
+#         'friendly_name': 'Liberty (CI tested)',
+#         'url':  'http://trunk.rdoproject.org/centos7-liberty/current-passed-ci/delorean.repo'
+#     },
+#     'kilo-master': {
+#         'name': 'kilo-master',
+#         'friendly_name': 'Kilo (master)',
+#         'url': 'http://trunk.rdoproject.org/centos7-kilo/current/delorean-kilo.repo'
+#     },
+#     'kilo-master-ci': {
+#         'name': 'kilo-master-ci',
+#         'friendly_name': 'Kilo (CI tested)',
+#         'url': 'http://trunk.rdoproject.org/centos7-kilo/current-passed-ci/delorean-kilo.repo'
+#     }
 # })
 
 # An ordered dict is recommended to have a consistent display experience but is not required.
 # Adding a tag in the following format will make it available in the compare menu automatically.
-# A tag has to match at least two releases to be useful.
+# A tag has to match at least two repositories to be useful.
 # TAGS = collections.OrderedDict({
 #     'liberty': {
 #         'name': 'liberty',
-#         'friendly_name': 'Liberty releases'
+#         'friendly_name': 'Liberty repositories'
 #     },
 #     'kilo': {
 #         'name': 'kilo',
-#         'friendly_name': 'Kilo releases'
+#         'friendly_name': 'Kilo repositories'
 #     }
 # })
+
+# http://dnf.readthedocs.org/en/latest/api_package.html
+# PACKAGE_PARAMS = ['arch', 'buildtime', 'downloadsize', 'epoch', 'files', 'installtime', 'installsize', 'name',
+#                   'release', 'sourcerpm', 'version']

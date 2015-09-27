@@ -11,9 +11,9 @@
       <thead>
         <tr>
           <th>Package</th>
-          {% for release in releases %}
-          {% if tag in release %}
-          <th><a href="{{ releases[release]['url'] }}">{{ releases[release]['friendly_name'] }}</a></th>
+          {% for repository in repositories %}
+          {% if tag in repository %}
+          <th><a href="{{ repositories[repository]['url'] }}">{{ repositories[repository]['friendly_name'] }}</a></th>
           {% endif %}
           {% endfor %}
         </tr>
@@ -26,9 +26,9 @@
           {% else %}
           <td>{{ package }}</td>
           {% endif %}
-          {% for release in releases %}
-          {% if tag in release %}
-          <td>{{ packages[package][release]['version']|truncate(length=25) if packages[package][release]['version'] }}-{{ packages[package][release]['release']|truncate(length=25) if packages[package][release]['release'] }}</td>
+          {% for repository in repositories %}
+          {% if tag in repository %}
+          <td>{{ packages[package][repository]['version']|truncate(length=25) if packages[package][repository]['version'] }}-{{ packages[package][repository]['release']|truncate(length=25) if packages[package][repository]['release'] }}</td>
           {% endif %}
           {% endfor %}
         </tr>

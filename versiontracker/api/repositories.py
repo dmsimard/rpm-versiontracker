@@ -21,11 +21,11 @@ class Repositories(Resource):
         if repository:
             if param:
                 try:
-                    return settings.RELEASES[repository][param]
+                    return settings.REPOSITORIES[repository][param]
                 except KeyError as e:
                     return "{0} is not configured in {1}: {2}".format(param, repository, repr(e))
             try:
-                return settings.RELEASES[repository]
+                return settings.REPOSITORIES[repository]
             except KeyError as e:
                 return "{0} is not configured: {1}".format(repository, repr(e))
-        return settings.RELEASES
+        return settings.REPOSITORIES

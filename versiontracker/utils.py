@@ -36,7 +36,7 @@ def fetch_base_urls(version):
     """
     Parses a ini-like repo file and returns the base urls
     """
-    repo_config = _url_as_ini_file(settings.RELEASES[version]['url'])
+    repo_config = _url_as_ini_file(settings.REPOSITORIES[version]['url'])
     config = configparser.SafeConfigParser()
     config.readfp(repo_config)
 
@@ -48,12 +48,12 @@ def fetch_base_urls(version):
     return base_urls
 
 
-def get_packages_from_repo(version):
+def get_packages_from_repo(repository):
     """
     Uses the dnf API to fetch the list of all available packages off of a baseurl
     """
     base = dnf.Base()
-    base_urls = fetch_base_urls(version)
+    base_urls = fetch_base_urls(repository)
     for name, base_url in base_urls:
         repo = dnf.repo.Repo(name, settings.TMPDIR)
         repo.baseurl = [base_url]
@@ -73,25 +73,25 @@ def diff_packages(packages, tag):
     Iterates over a list of packages dictionaries and highlights differences, if any.
     Returns the same dictionary with an extra key to show if there are differences.
     """
-    # TODO: I don't like part, it works but needs improvement.
+    # TODO: I don't like this part, it works but needs improvement.
     # Highlight package differences, if any
     for package in packages:
         compare_version = ""
-        for release in settings.RELEASES:
-            if tag in release:
+        for repository in settings.REPOSITORIES:
+            if tag in repository:
                 packages[package]['different'] = False
                 try:
-                    full_version = packages[package][release]['version'] + packages[package][release]['release']
+                    full_version = packages[package][repository]['version'] + packages[package][repository]['release']
                 except KeyError:
-                    # Package exists in at least one release and doesn't exist in at least one release
+                    # Package exists in at least one repository and doesn't exist in at least one repository
                     packages[package]['different'] = True
                 if not compare_version:
                     # Establish a base for comparison
                     compare_version = full_version
                 if compare_version == full_version:
-                    # Version for this release is identical to the last one compared against
+                    # Version for this repository is identical to the last one compared against
                     continue
                 else:
-                    # Version for this release is not identical to the last one compared against
+                    # Version for this repository is not identical to the last one compared against
                     packages[package]['different'] = True
     return packages

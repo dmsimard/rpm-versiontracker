@@ -27,8 +27,8 @@ TMPDIR = '/tmp/'
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # An ordered dict is recommended to have a consistent display experience but is not required.
-# Adding a release in the following format will make it available in the top menu automatically.
-RELEASES = collections.OrderedDict({
+# Adding a repository in the following format will make it available in the top menu automatically.
+REPOSITORIES = collections.OrderedDict({
     'liberty-master': {
         'name': 'liberty-master',
         'friendly_name': 'Liberty (master)',
@@ -53,15 +53,15 @@ RELEASES = collections.OrderedDict({
 
 # An ordered dict is recommended to have a consistent display experience but is not required.
 # Adding a tag in the following format will make it available in the compare menu automatically.
-# A tag has to match at least two releases to be useful.
+# A tag has to match at least two repositories to be useful.
 TAGS = collections.OrderedDict({
     'liberty': {
         'name': 'liberty',
-        'friendly_name': 'Liberty releases'
+        'friendly_name': 'Liberty repositories'
     },
     'kilo': {
         'name': 'kilo',
-        'friendly_name': 'Kilo releases'
+        'friendly_name': 'Kilo repositories'
     }
 })
 

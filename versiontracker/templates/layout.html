@@ -24,8 +24,8 @@
               </div>
               <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                  {% for release in releases %}
-                  <li><a href="/packages/{{ releases[release]['name'] }}">{{ releases[release]['friendly_name'] }}</a></li>
+                  {% for repository in repositories %}
+                  <li><a href="/packages/{{ repositories[repository]['name'] }}">{{ repositories[repository]['friendly_name'] }}</a></li>
                   {% endfor %}
                   {% if tags %}
                   <li class="dropdown">
