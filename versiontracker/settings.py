@@ -65,5 +65,5 @@ TAGS = collections.OrderedDict({
     }
 })
 
-if os.path.exists(os.path.join(BASE_DIR, 'lib/local_settings.py')):
-	from lib.local_settings import *
+if os.path.exists(os.path.join(BASE_DIR, 'local_settings.py')):
+    from versiontracker.local_settings import *

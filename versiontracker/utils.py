@@ -14,10 +14,13 @@
 
 """ Utilities and helper functions """
 import configparser
+
 import dnf
 import io
 import requests
-from lib import settings
+
+from versiontracker import settings
+
 
 def _url_as_ini_file(url):
     """
