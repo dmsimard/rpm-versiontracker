@@ -12,17 +12,16 @@
 #   License for the specific language governing permissions and limitations
 #   under the License.
 
-import datetime
-
 import collections
+import datetime
 from flask import Flask, render_template
 from flask_restful import Api
 
-from versiontracker.api.repositories import Repositories
-from versiontracker.api.packages import Packages
-
 from versiontracker import utils
 from versiontracker import settings
+
+from versiontracker.api.repositories import Repositories
+from versiontracker.api.packages import Packages
 
 app = Flask(__name__)
 api = Api(app)
@@ -69,10 +68,6 @@ def details(repository):
 @app.route('/compare/<tag>')
 def compare(tag):
     """ Compares the versions across different repositories matching <tag> """
-    # For each package, build the necessary dict to display in the template
-    # The params we're interested to compare
-    params = ['name', 'release', 'version']
-
     # TODO: I don't like this part, it works but needs improvement. Move to a function ?
     # Retrieve 'params' of each package of each release
     packages = collections.OrderedDict()
@@ -82,9 +77,8 @@ def compare(tag):
             for package in repository_packages:
                 if package.name not in packages:
                     packages[package.name] = collections.defaultdict(dict)
-                for param in params:
-                    packages[package.name][repository][param] = getattr(package,
-                                                                     param)
+                for param in settings.PACKAGE_PARAMS:
+                    packages[package.name][repository][param] = getattr(package, param)
 
     # Match package versions for each release to highlight differences
     packages = utils.diff_packages(packages, tag)

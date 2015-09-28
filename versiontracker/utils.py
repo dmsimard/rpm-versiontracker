@@ -14,7 +14,6 @@
 
 """ Utilities and helper functions """
 import configparser
-
 import dnf
 import io
 import requests
@@ -60,11 +59,8 @@ def get_packages_from_repo(repository):
         base.repos.add(repo)
     base.fill_sack()
 
-    # A query matches all packages in sack
-    q = base.sack.query()
-    # Derived query matches only available packages
-    q_avail = q.available()
-    packages = q_avail.run()
+    # Query all available packages in sack
+    packages = base.sack.query().available().run()
 
     return packages
 
@@ -77,9 +73,9 @@ def diff_packages(packages, tag):
     # Highlight package differences, if any
     for package in packages:
         compare_version = ""
+        packages[package]['different'] = False
         for repository in settings.REPOSITORIES:
             if tag in repository:
-                packages[package]['different'] = False
                 try:
                     full_version = packages[package][repository]['version'] + packages[package][repository]['release']
                 except KeyError:
@@ -94,4 +90,5 @@ def diff_packages(packages, tag):
                 else:
                     # Version for this repository is not identical to the last one compared against
                     packages[package]['different'] = True
+
     return packages
