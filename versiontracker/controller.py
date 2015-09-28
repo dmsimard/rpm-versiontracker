@@ -73,19 +73,9 @@ def details(repository):
 def compare(tag):
     """ Compares the versions across different repositories matching <tag> """
     # TODO: I don't like this part, it works but needs improvement. Move to a function ?
-    # Retrieve 'params' of each package of each release
-    packages = collections.OrderedDict()
-    for repository in repositories:
-        if tag in repository:
-            repository_packages = Packages().get(repository=repository)
-            for package in repository_packages:
-                if package.name not in packages:
-                    packages[package.name] = collections.defaultdict(dict)
-                for param in settings.PACKAGE_PARAMS:
-                    packages[package.name][repository][param] = getattr(package, param)
+    matched_repositories = [repository for repository in repositories if tag in repository]
 
     # Match package versions for each release to highlight differences
-    packages = utils.diff_packages(packages, tag)
+    packages = utils.diff_packages(matched_repositories)
 
     return render_template('compare.html', tag=tag, packages=packages, repositories=repositories, tags=tags)
-

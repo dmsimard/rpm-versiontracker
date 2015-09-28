@@ -13,6 +13,7 @@
 #   under the License.
 
 """ Utilities and helper functions """
+import collections
 import configparser
 import dnf
 import io
@@ -64,31 +65,40 @@ def get_packages_from_repo(repository):
 
     return packages
 
-def diff_packages(packages, tag):
+def diff_packages(repositories):
     """
     Iterates over a list of packages dictionaries and highlights differences, if any.
     Returns the same dictionary with an extra key to show if there are differences.
     """
     # TODO: I don't like this part, it works but needs improvement.
+    # Retrieve packages for each repository
+    packages = collections.OrderedDict()
+    for repository in repositories:
+        repository_packages = get_packages_from_repo(repository)
+        for package in repository_packages:
+            if package.name not in packages:
+                packages[package.name] = collections.defaultdict(dict)
+            for param in settings.PACKAGE_PARAMS:
+                packages[package.name][repository][param] = getattr(package, param)
+
     # Highlight package differences, if any
     for package in packages:
         compare_version = ""
         packages[package]['different'] = False
-        for repository in settings.REPOSITORIES:
-            if tag in repository:
-                try:
-                    full_version = packages[package][repository]['version'] + packages[package][repository]['release']
-                except KeyError:
-                    # Package exists in at least one repository and doesn't exist in at least one repository
-                    packages[package]['different'] = True
-                if not compare_version:
-                    # Establish a base for comparison
-                    compare_version = full_version
-                if compare_version == full_version:
-                    # Version for this repository is identical to the last one compared against
-                    continue
-                else:
-                    # Version for this repository is not identical to the last one compared against
-                    packages[package]['different'] = True
+        for repository in repositories:
+            try:
+                full_version = packages[package][repository]['version'] + packages[package][repository]['release']
+            except KeyError:
+                # Package exists in at least one repository and doesn't exist in at least one repository
+                packages[package]['different'] = True
+            if not compare_version:
+                # Establish a base for comparison
+                compare_version = full_version
+            if compare_version == full_version:
+                # Version for this repository is identical to the last one compared against
+                continue
+            else:
+                # Version for this repository is not identical to the last one compared against
+                packages[package]['different'] = True
 
     return packages
