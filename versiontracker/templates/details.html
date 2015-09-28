@@ -12,6 +12,7 @@
       <thead>
         <tr>
           <th>Package</th>
+          <th>Arch</th>
           <th>Build date</th>
           <th>Version</th>
           <th>Release</th>
@@ -22,6 +23,7 @@
         {% if 'src' not in package.arch %}
         <tr>
           <td>{{ package.name }}</td>
+          <td>{{ package.arch }}</td>
           <td>{{ package.buildtime|datetime }}</td>
           <td>{{ package.version }}</td>
           <td>{{ package.release|truncate }}</td>
