@@ -20,20 +20,25 @@ from flask_restful import Api
 from versiontracker import utils
 from versiontracker import settings
 
-from versiontracker.api.repositories import Repositories
 from versiontracker.api.packages import Packages
+from versiontracker.api.repositories import Repositories
+from versiontracker.api.tags import Tags
 
 app = Flask(__name__)
 api = Api(app)
-api.add_resource(Repositories,
-                 '/repositories',
-                 '/repositories/<string:repository>',
-                 '/repositories/<string:repository>/<string:param>')
 
 api.add_resource(Packages,
                  '/packages/<string:repository>',
                  '/packages/<string:repository>/<string:package>',
                  '/packages/<string:repository>/<string:package>/<string:param>')
+api.add_resource(Repositories,
+                 '/repositories',
+                 '/repositories/<string:repository>',
+                 '/repositories/<string:repository>/<string:param>')
+api.add_resource(Tags,
+                 '/tags',
+                 '/tags/<string:tag>',
+                 '/tags/<string:tag>/<string:param>')
 
 
 # Jinja Filters
