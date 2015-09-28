@@ -37,8 +37,8 @@ def fetch_base_urls(version):
     Parses a ini-like repo file and returns the base urls
     """
     repo_config = _url_as_ini_file(settings.REPOSITORIES[version]['url'])
-    config = configparser.SafeConfigParser()
-    config.readfp(repo_config)
+    config = configparser.ConfigParser()
+    config.read_file(repo_config)
 
     base_urls = list()
     for repository in config.sections():
