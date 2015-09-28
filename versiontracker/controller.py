@@ -18,7 +18,6 @@ from flask import Flask, render_template
 from flask_restful import Api
 
 from versiontracker import utils
-from versiontracker import settings
 
 from versiontracker.api.packages import Packages
 from versiontracker.api.repositories import Repositories
@@ -53,21 +52,21 @@ def jinja_truncate_string(string, length=40):
     """ Truncates a string to max length """
     return string[:length] + (string[length:] and '...')
 
-
 # App routing
+# Common variables
+repositories = Repositories().get()
+tags = Tags().get()
+
 @app.route('/')
 def main():
-    return render_template('home.html', repositories=settings.REPOSITORIES,
-                           tags=settings.TAGS)
+    return render_template('home.html', repositories=repositories, tags=tags)
 
 
 @app.route('/details/<repository>')
 def details(repository):
     """ Returns the list of packages for <repository> """
-    packages = utils.get_packages_from_repo(repository)
-    return render_template('details.html', repositories=settings.REPOSITORIES,
-                           tags=settings.TAGS, repository=repository,
-                           packages=packages)
+    packages = Packages().get(repository=repository)
+    return render_template('details.html', repository=repository, packages=packages, repositories=repositories, tags=tags)
 
 
 @app.route('/compare/<tag>')
@@ -76,9 +75,9 @@ def compare(tag):
     # TODO: I don't like this part, it works but needs improvement. Move to a function ?
     # Retrieve 'params' of each package of each release
     packages = collections.OrderedDict()
-    for repository in settings.REPOSITORIES:
+    for repository in repositories:
         if tag in repository:
-            repository_packages = utils.get_packages_from_repo(repository)
+            repository_packages = Packages().get(repository=repository)
             for package in repository_packages:
                 if package.name not in packages:
                     packages[package.name] = collections.defaultdict(dict)
@@ -88,6 +87,5 @@ def compare(tag):
     # Match package versions for each release to highlight differences
     packages = utils.diff_packages(packages, tag)
 
-    return render_template('compare.html', repositories=settings.REPOSITORIES,
-                           tags=settings.TAGS, tag=tag, packages=packages)
+    return render_template('compare.html', tag=tag, packages=packages, repositories=repositories, tags=tags)
 
