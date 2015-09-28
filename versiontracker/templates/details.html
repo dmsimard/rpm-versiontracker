@@ -20,13 +20,13 @@
       </thead>
       <tbody>
         {% for package in packages %}
-        {% if 'src' not in package.arch %}
+        {% if 'src' not in packages[package]['arch'] %}
         <tr>
-          <td>{{ package.name }}</td>
-          <td>{{ package.arch }}</td>
-          <td>{{ package.buildtime|datetime }}</td>
-          <td>{{ package.version }}</td>
-          <td>{{ package.release|truncate }}</td>
+          <td>{{ packages[package]['name'] }}</td>
+          <td>{{ packages[package]['arch'] }}</td>
+          <td>{{ packages[package]['buildtime']|datetime }}</td>
+          <td>{{ packages[package]['version'] }}</td>
+          <td>{{ packages[package]['release']|truncate }}</td>
         </tr>
         {% endif %}
         {% endfor %}
