@@ -19,7 +19,7 @@ from flask_restful import Api
 from versiontracker import utils
 
 from versiontracker.api.packages import Packages
-from versiontracker.api.settings import Repositories, Tags
+from versiontracker.api.settings import Repositories, Tags, PackageProperties
 
 app = Flask(__name__)
 api = Api(app)
@@ -36,6 +36,8 @@ api.add_resource(Tags,
                  '/tags',
                  '/tags/<string:tag>',
                  '/tags/<string:tag>/<string:param>')
+api.add_resource(PackageProperties,
+                 '/packageproperties')
 
 
 # Jinja Filters
