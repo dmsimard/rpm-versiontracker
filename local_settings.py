@@ -63,3 +63,6 @@ import collections
 # http://dnf.readthedocs.org/en/latest/api_package.html
 # PACKAGE_PROPERTIES = ['arch', 'buildtime', 'downloadsize', 'epoch', 'files', 'installtime', 'installsize', 'name',
 #                   'release', 'sourcerpm', 'version']
+
+# Whether or not to show source packages as well
+# SHOW_SOURCE_RPM = False

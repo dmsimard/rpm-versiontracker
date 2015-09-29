@@ -3,7 +3,7 @@
 <div class="row">
   <div class="col-md-12 text-center">
     <h1><a href="{{ repositories[repository]['url'] }}">{{ repositories[repository]['friendly_name'] }}</a></h1>
-    <small class="text-center">Based on <a href="{{ repositories[repository]['url'] }}">{{ repositories[repository]['url'] }}</a></small>
+    <small>Based on <a href="{{ repositories[repository]['url'] }}">{{ repositories[repository]['url'] }}</a></small>
   </div>
 </div>
 <div class="row">
@@ -20,7 +20,7 @@
       </thead>
       <tbody>
         {% for package in packages %}
-        {% if 'src' not in packages[package]['arch'] %}
+        {% if (show_source_rpm) or (not show_source_rpm and packages[package]['arch'] != 'src') %}
         <tr>
           <td>{{ packages[package]['name'] }}</td>
           <td>{{ packages[package]['arch'] }}</td>

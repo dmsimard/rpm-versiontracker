@@ -87,6 +87,11 @@ def diff_packages(repositories):
         packages[package]['different'] = False
         for repository in repositories:
             try:
+                if not packages[package]['arch']:
+                    packages[package]['arch'] = packages[package][repository]['arch']
+            except KeyError:
+                pass
+            try:
                 full_version = packages[package][repository]['version'] + packages[package][repository]['release']
             except KeyError:
                 # Package exists in at least one repository and doesn't exist in at least one repository

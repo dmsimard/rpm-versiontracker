@@ -69,5 +69,8 @@ TAGS = collections.OrderedDict({
 PACKAGE_PROPERTIES = ['arch', 'buildtime', 'downloadsize', 'epoch', 'files', 'installtime', 'installsize', 'name',
                   'release', 'sourcerpm', 'version']
 
+# Whether or not to show source packages as well
+SHOW_SOURCE_RPM = False
+
 if os.path.exists(os.path.join(BASE_DIR, 'local_settings.py')):
     from local_settings import *

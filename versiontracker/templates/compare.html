@@ -12,6 +12,7 @@
       <thead>
         <tr>
           <th>Package</th>
+          <th>Arch</th>
           {% for repository in repositories %}
           {% if tag in repository %}
           <th><a href="{{ repositories[repository]['url'] }}">{{ repositories[repository]['friendly_name'] }}</a></th>
@@ -21,18 +22,21 @@
       </thead>
       <tbody>
         {% for package in packages %}
+        {% if (show_source_rpm) or (not show_source_rpm and packages[package]['arch'] != 'src') %}
         <tr>
           {% if packages[package]['different'] %}
           <td><span class="label label-primary" style="font-size:100%">{{ package }}</span></td>
           {% else %}
           <td>{{ package }}</td>
           {% endif %}
+          <td>{{ packages[package]['arch'] }}</td>
           {% for repository in repositories %}
           {% if tag in repository %}
           <td>{{ packages[package][repository]['version']|truncate(length=25) if packages[package][repository]['version'] }}-{{ packages[package][repository]['release']|truncate(length=25) if packages[package][repository]['release'] }}</td>
           {% endif %}
           {% endfor %}
         </tr>
+        {% endif %}
         {% endfor %}
       </tbody>
     </table>

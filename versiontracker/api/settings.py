@@ -50,3 +50,8 @@ class Tags(Resource):
 class PackageProperties(Resource):
     def get(self):
         return settings.PACKAGE_PROPERTIES
+
+
+class ShowSourceRpm(Resource):
+    def get(self):
+        return settings.SHOW_SOURCE_RPM

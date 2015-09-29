@@ -19,7 +19,7 @@ from flask_restful import Api
 from versiontracker import utils
 
 from versiontracker.api.packages import Packages
-from versiontracker.api.settings import Repositories, Tags, PackageProperties
+from versiontracker.api.settings import Repositories, Tags, PackageProperties, ShowSourceRpm
 
 app = Flask(__name__)
 api = Api(app)
@@ -38,6 +38,8 @@ api.add_resource(Tags,
                  '/settings/tags/<string:tag>/<string:param>')
 api.add_resource(PackageProperties,
                  '/settings/packageproperties')
+api.add_resource(ShowSourceRpm,
+                 '/settings/showsourcerpm')
 
 
 # Jinja Filters
@@ -53,29 +55,34 @@ def jinja_truncate_string(string, length=40):
     return string[:length] + (string[length:] and '...')
 
 # App routing
-# Common variables
+# Common/default settings
 repositories = Repositories().get()
 tags = Tags().get()
+show_source_rpm = ShowSourceRpm().get()
+default_settings = {
+    'repositories': repositories,
+    'tags': tags,
+    'show_source_rpm': show_source_rpm
+}
 
 @app.route('/')
 def main():
-    return render_template('home.html', repositories=repositories, tags=tags)
+    return render_template('home.html', **default_settings)
 
 
 @app.route('/details/<repository>')
 def details(repository):
     """ Returns the list of packages for <repository> """
     packages = Packages().get(repository=repository)
-    return render_template('details.html', repository=repository, packages=packages, repositories=repositories, tags=tags)
+    return render_template('details.html', repository=repository, packages=packages, **default_settings)
 
 
 @app.route('/compare/<tag>')
 def compare(tag):
     """ Compares the versions across different repositories matching <tag> """
-    # TODO: I don't like this part, it works but needs improvement. Move to a function ?
     matched_repositories = [repository for repository in repositories if tag in repository]
 
     # Match package versions for each release to highlight differences
     packages = utils.diff_packages(matched_repositories)
 
-    return render_template('compare.html', tag=tag, packages=packages, repositories=repositories, tags=tags)
+    return render_template('compare.html', tag=tag, packages=packages, **default_settings)
