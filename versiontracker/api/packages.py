@@ -12,6 +12,7 @@
 #   License for the specific language governing permissions and limitations
 #   under the License.
 
+import collections
 import configparser
 import dnf
 import io
@@ -23,7 +24,7 @@ from versiontracker import settings
 
 class Packages(Resource):
     def get(self, repository, package=None, property=None):
-        packages = {}
+        packages = collections.OrderedDict()
         try:
             repository_packages = _get_packages_from_repo(repository)
         except KeyError as e:
