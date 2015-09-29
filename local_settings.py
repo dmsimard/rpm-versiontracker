@@ -17,13 +17,9 @@ This is where you would override the default settings as configured in settings.
 """
 
 import collections
-import os
 
 # Where DNF cache data will be stored
 # TMPDIR = '/tmp/'
-
-# So we can know where we're loaded from
-# BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # An ordered dict is recommended to have a consistent display experience but is not required.
 # Adding a repository in the following format will make it available in the top menu automatically.
