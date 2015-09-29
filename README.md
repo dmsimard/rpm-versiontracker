@@ -1,5 +1,5 @@
-rpm-versiontracker is a small, generic, [Flask](http://flask.pocoo.org/) web
-application that leverages the
+``rpm-versiontracker`` is a small, generic, [Flask](http://flask.pocoo.org/)
+web application that leverages the
 [DNF API](http://dnf.readthedocs.org/en/latest/index.html) to display the list
  of packages available from different repositories and compare them.
 
@@ -22,40 +22,11 @@ What it looks like
 This application is currently used for following package versions across
 different Openstack repositories [here](http://versiontracker.dmsimard.com).
 
-Installing
-==========
-Dependencies
-------------
-__CentOS 7/RHEL7__:
-
-    yum install dnf python34 python3-pip
-    pip3 install -r requirements.txt
-
-__Fedora 22+__:
-
-    dnf install python3 python3-pip
-    pip3 install -r requirements.txt
-
-Configuration
--------------
-Set up your repositories and tags in
-[local_settings.py](local_settings.py).
-
-Making the application available
---------------------------------
-Flask provides a standalone web server but it is recommended to use a proper
-application server and put a proxy in front of it.
-
-You can refer to the
-[Flask documentation](http://flask.pocoo.org/docs/0.10/deploying/) for
-instructions on how to set this up but essentially:
-
-- Set up an application server (_wsgi, uwsgi, gunicorn, etc._) to use
- ``versiontracker:app``.
-- Set up a proxy in front your application server (_apache, nginx, etc._)
-
-Otherwise, you can just execute ``versiontracker.py`` and it'll fire a version
-of the application locally on http://127.0.0.1:5000.
+Documentation
+=============
+Documentation on the REST API, how to install, configure and run
+``rpm-versiontracker`` is available on
+[ReadTheDocs.org](http://rpm-versiontracker.readthedocs.org/en/latest/)
 
 Author
 ======
