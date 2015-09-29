@@ -29,6 +29,10 @@ Perhaps your favorite setup is with `Apache and mod_wsgi`_ or you're used to
 What you need to know is that the application to start is ``run:app`` where
 ``run`` references `run.py`_ and ``app`` the actual Flask application.
 
+The REST API is currently unrestricted. It is highly recommended to secure
+access to it with the help of a web server or other means as it could fairly
+easily be abused or used in amplification attacks.
+
 .. _documentation: http://flask.pocoo.org/docs/0.10/deploying/
 .. _Apache and mod_wsgi: http://flask.pocoo.org/docs/0.10/deploying/mod_wsgi/
 .. _gunicorn: http://flask.pocoo.org/docs/0.10/deploying/wsgi-standalone/#gunicorn

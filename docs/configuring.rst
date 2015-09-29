@@ -12,9 +12,8 @@ Settings
 ~~~~~~~~
 * ``TMPDIR`` is a path that defines where ``DNF`` will store it's repository
   cache.
-* ``REPOSITORIES`` defines which repositories can be queried and has the
-  following structure. Configured repositories will automatically show up in the
-  top menu.
+* ``REPOSITORIES`` defines which repositories can be queried. Configured
+  repositories will automatically show up in the top menu.
 * ``TAGS`` is a string matcher. It will automatically create a link in the
   ``Compare`` tab of the top menu for comparing repositories that match the tag
   string.

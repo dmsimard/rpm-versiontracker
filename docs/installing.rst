@@ -22,4 +22,4 @@ will be running it from::
 Read on the `configuration documentation`_ to see how to configure
 ``rpm-versiontracker``.
 
-.. _configuration documentation: configuration.html
+.. _configuration documentation: configuring.html
