@@ -14,72 +14,28 @@
 
 """ Utilities and helper functions """
 import collections
-import configparser
-import dnf
-import io
-import requests
 
 from versiontracker import settings
+from versiontracker.api.packages import Packages
 
-
-def _url_as_ini_file(url):
-    """
-    Returns a file-like object of an URL to use it with configparser
-    """
-    text = requests.get(url).text
-    inifile = io.StringIO(text)
-    inifile.seek(0)
-    return inifile
-
-
-def fetch_base_urls(version):
-    """
-    Parses a ini-like repo file and returns the base urls
-    """
-    repo_config = _url_as_ini_file(settings.REPOSITORIES[version]['url'])
-    config = configparser.ConfigParser()
-    config.read_file(repo_config)
-
-    base_urls = list()
-    for repository in config.sections():
-        base_urls.append((config.get(repository, 'name'),
-                          config.get(repository, 'baseurl')))
-
-    return base_urls
-
-
-def get_packages_from_repo(repository):
-    """
-    Uses the dnf API to fetch the list of all available packages off of a baseurl
-    """
-    base = dnf.Base()
-    base_urls = fetch_base_urls(repository)
-    for name, base_url in base_urls:
-        repo = dnf.repo.Repo(name, settings.TMPDIR)
-        repo.baseurl = [base_url]
-        base.repos.add(repo)
-    base.fill_sack()
-
-    # Query all available packages in sack
-    packages = base.sack.query().available().run()
-
-    return packages
 
 def diff_packages(repositories):
     """
     Iterates over a list of packages dictionaries and highlights differences, if any.
     Returns the same dictionary with an extra key to show if there are differences.
+
+    Creates common keys for packages such as arch, package name and different.
     """
     # TODO: I don't like this part, it works but needs improvement.
     # Retrieve packages for each repository
     packages = collections.OrderedDict()
     for repository in repositories:
-        repository_packages = get_packages_from_repo(repository)
+        repository_packages = Packages().get(repository)
         for package in repository_packages:
-            if package.name not in packages:
-                packages[package.name] = collections.defaultdict(dict)
+            if package not in packages:
+                packages[package] = collections.defaultdict(dict)
             for property in settings.PACKAGE_PROPERTIES:
-                packages[package.name][repository][property] = getattr(package, property)
+                packages[package][repository][property] = repository_packages[package][property]
 
     # Highlight package differences, if any
     for package in packages:
@@ -89,6 +45,7 @@ def diff_packages(repositories):
             try:
                 if not packages[package]['arch']:
                     packages[package]['arch'] = packages[package][repository]['arch']
+                    packages[package]['name'] = packages[package][repository]['name']
             except KeyError:
                 pass
             try:

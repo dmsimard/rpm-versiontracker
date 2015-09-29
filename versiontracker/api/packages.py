@@ -12,24 +12,28 @@
 #   License for the specific language governing permissions and limitations
 #   under the License.
 
+import configparser
+import dnf
+import io
+import requests
 from flask_restful import Resource
 
 from versiontracker import settings
-from versiontracker import utils
 
 
 class Packages(Resource):
     def get(self, repository, package=None, property=None):
         packages = {}
         try:
-            repository_packages = utils.get_packages_from_repo(repository)
+            repository_packages = _get_packages_from_repo(repository)
         except KeyError as e:
             raise KeyError("{0} repository is not configured: {1}".format(repository, repr(e)))
 
         for repository_package in repository_packages:
-            packages[repository_package.name] = {}
+            package_index = "%s-%s" % (repository_package.name, repository_package.arch)
+            packages[package_index] = {}
             for pkg_property in settings.PACKAGE_PROPERTIES:
-                packages[repository_package.name][pkg_property] = getattr(repository_package, pkg_property)
+                packages[package_index][pkg_property] = getattr(repository_package, pkg_property)
 
         if package:
             if property:
@@ -44,3 +48,47 @@ class Packages(Resource):
                 raise KeyError("{0} is not in the list of packages: {1}".format(package, repr(e)))
 
         return packages
+
+
+def _fetch_base_urls(repository):
+    """
+    Parses a ini-like repo file and returns the base urls
+    """
+    repo_config = _url_as_ini_file(settings.REPOSITORIES[repository]['url'])
+    config = configparser.ConfigParser()
+    config.read_file(repo_config)
+
+    base_urls = list()
+    for repo in config.sections():
+        base_urls.append((config.get(repo, 'name'),
+                          config.get(repo, 'baseurl')))
+
+    return base_urls
+
+
+def _get_packages_from_repo(repository):
+    """
+    Uses the dnf API to fetch the list of all available packages off of a baseurl
+    """
+    base = dnf.Base()
+    base_urls = _fetch_base_urls(repository)
+    for name, base_url in base_urls:
+        repo = dnf.repo.Repo(name, settings.TMPDIR)
+        repo.baseurl = [base_url]
+        base.repos.add(repo)
+    base.fill_sack()
+
+    # Query all available packages in sack
+    packages = base.sack.query().available().run()
+
+    return packages
+
+
+def _url_as_ini_file(url):
+    """
+    Returns a file-like object of an URL to use it with configparser
+    """
+    text = requests.get(url).text
+    inifile = io.StringIO(text)
+    inifile.seek(0)
+    return inifile
