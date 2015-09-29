@@ -1,8 +1,9 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="row">
-  <div class="col-md-12">
-    <h1 class="text-center">Package comparison for {{ tags[tag]['friendly_name'] }}</h1>
+  <div class="col-md-12 text-center">
+    <h1>Package comparison for {{ tags[tag]['friendly_name'] }}</h1>
+    <small>Highlighted packages have different versions across the compared repositories</small>
   </div>
 </div>
 <div class="row">
