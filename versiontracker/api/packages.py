@@ -28,8 +28,8 @@ class Packages(Resource):
 
         for repository_package in repository_packages:
             packages[repository_package.name] = {}
-            for property in settings.PACKAGE_PROPERTIES:
-                packages[repository_package.name][property] = getattr(repository_package, property)
+            for pkg_property in settings.PACKAGE_PROPERTIES:
+                packages[repository_package.name][pkg_property] = getattr(repository_package, pkg_property)
 
         if package:
             if property:
