@@ -46,6 +46,7 @@ class Tags(Resource):
                 return "{0} is not configured: {1}".format(tag, repr(e))
         return settings.TAGS
 
+
 class PackageProperties(Resource):
     def get(self):
         return settings.PACKAGE_PROPERTIES

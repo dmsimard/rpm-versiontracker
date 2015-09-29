@@ -29,15 +29,15 @@ api.add_resource(Packages,
                  '/packages/<string:repository>/<string:package>',
                  '/packages/<string:repository>/<string:package>/<string:property>')
 api.add_resource(Repositories,
-                 '/repositories',
-                 '/repositories/<string:repository>',
-                 '/repositories/<string:repository>/<string:param>')
+                 '/settings/repositories',
+                 '/settings/repositories/<string:repository>',
+                 '/settings/repositories/<string:repository>/<string:param>')
 api.add_resource(Tags,
-                 '/tags',
-                 '/tags/<string:tag>',
-                 '/tags/<string:tag>/<string:param>')
+                 '/settings/tags',
+                 '/settings/tags/<string:tag>',
+                 '/settings/tags/<string:tag>/<string:param>')
 api.add_resource(PackageProperties,
-                 '/packageproperties')
+                 '/settings/packageproperties')
 
 
 # Jinja Filters
