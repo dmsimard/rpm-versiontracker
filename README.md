@@ -3,6 +3,9 @@ web application that leverages the
 [DNF API](http://dnf.readthedocs.org/en/latest/index.html) to display the list
  of packages available from different repositories and compare them.
 
+It provides a REST API to query it’s settings and return package lists so you
+can build and integrate around it.
+
 ``DNF`` is short for ``Dandified Yum``, the next generation of package
 management for Red Hat based distributions.
 
