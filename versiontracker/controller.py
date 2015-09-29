@@ -27,7 +27,7 @@ api = Api(app)
 api.add_resource(Packages,
                  '/packages/<string:repository>',
                  '/packages/<string:repository>/<string:package>',
-                 '/packages/<string:repository>/<string:package>/<string:param>')
+                 '/packages/<string:repository>/<string:package>/<string:property>')
 api.add_resource(Repositories,
                  '/repositories',
                  '/repositories/<string:repository>',

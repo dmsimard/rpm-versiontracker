@@ -19,7 +19,7 @@ from versiontracker import utils
 
 
 class Packages(Resource):
-    def get(self, repository, package=None, param=None):
+    def get(self, repository, package=None, property=None):
         packages = {}
         try:
             repository_packages = utils.get_packages_from_repo(repository)
@@ -28,15 +28,15 @@ class Packages(Resource):
 
         for repository_package in repository_packages:
             packages[repository_package.name] = {}
-            for package_param in settings.PACKAGE_PARAMS:
-                packages[repository_package.name][package_param] = getattr(repository_package, package_param)
+            for property in settings.PACKAGE_PROPERTIES:
+                packages[repository_package.name][property] = getattr(repository_package, property)
 
         if package:
-            if param:
+            if property:
                 try:
-                    return packages[package][param]
+                    return packages[package][property]
                 except KeyError as e:
-                    return "{0} for {1} is not in the list of packages: {2}".format(param, packages, repr(e))
+                    return "{0} for {1} is not in the list of packages: {2}".format(property, packages, repr(e))
 
             try:
                 return packages[package]

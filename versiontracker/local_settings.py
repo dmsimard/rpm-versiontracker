@@ -65,5 +65,5 @@ import os
 # })
 
 # http://dnf.readthedocs.org/en/latest/api_package.html
-# PACKAGE_PARAMS = ['arch', 'buildtime', 'downloadsize', 'epoch', 'files', 'installtime', 'installsize', 'name',
+# PACKAGE_PROPERTIES = ['arch', 'buildtime', 'downloadsize', 'epoch', 'files', 'installtime', 'installsize', 'name',
 #                   'release', 'sourcerpm', 'version']

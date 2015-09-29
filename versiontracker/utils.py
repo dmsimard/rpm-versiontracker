@@ -78,8 +78,8 @@ def diff_packages(repositories):
         for package in repository_packages:
             if package.name not in packages:
                 packages[package.name] = collections.defaultdict(dict)
-            for param in settings.PACKAGE_PARAMS:
-                packages[package.name][repository][param] = getattr(package, param)
+            for property in settings.PACKAGE_PROPERTIES:
+                packages[package.name][repository][property] = getattr(package, property)
 
     # Highlight package differences, if any
     for package in packages:

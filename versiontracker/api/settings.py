@@ -45,4 +45,3 @@ class Tags(Resource):
             except KeyError as e:
                 return "{0} is not configured: {1}".format(tag, repr(e))
         return settings.TAGS
-
