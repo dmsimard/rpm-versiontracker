@@ -12,7 +12,6 @@
 #   License for the specific language governing permissions and limitations
 #   under the License.
 
-import collections
 import datetime
 from flask import Flask, render_template
 from flask_restful import Api
@@ -20,8 +19,7 @@ from flask_restful import Api
 from versiontracker import utils
 
 from versiontracker.api.packages import Packages
-from versiontracker.api.repositories import Repositories
-from versiontracker.api.tags import Tags
+from versiontracker.api.settings import Repositories, Tags
 
 app = Flask(__name__)
 api = Api(app)

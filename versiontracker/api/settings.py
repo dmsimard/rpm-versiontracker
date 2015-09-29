@@ -13,7 +13,23 @@
 #   under the License.
 
 from flask_restful import Resource
+
 from versiontracker import settings
+
+
+class Repositories(Resource):
+    def get(self, repository=None, param=None):
+        if repository:
+            if param:
+                try:
+                    return settings.REPOSITORIES[repository][param]
+                except KeyError as e:
+                    return "{0} is not configured in {1}: {2}".format(param, repository, repr(e))
+            try:
+                return settings.REPOSITORIES[repository]
+            except KeyError as e:
+                return "{0} is not configured: {1}".format(repository, repr(e))
+        return settings.REPOSITORIES
 
 
 class Tags(Resource):
@@ -29,3 +45,4 @@ class Tags(Resource):
             except KeyError as e:
                 return "{0} is not configured: {1}".format(tag, repr(e))
         return settings.TAGS
+
