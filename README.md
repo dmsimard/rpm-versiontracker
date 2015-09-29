@@ -39,7 +39,7 @@ __Fedora 22+__:
 Configuration
 -------------
 Set up your repositories and tags in
-[local_settings.py](lib/local_settings.py).
+[local_settings.py](local_settings.py).
 
 Making the application available
 --------------------------------
