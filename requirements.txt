@@ -1,3 +1,5 @@
 flask
 flask-restful
 requests
+sphinx
+sphinxcontrib-httpdomain
