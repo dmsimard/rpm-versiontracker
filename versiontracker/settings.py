@@ -70,4 +70,4 @@ PACKAGE_PROPERTIES = ['arch', 'buildtime', 'downloadsize', 'epoch', 'files', 'in
                   'release', 'sourcerpm', 'version']
 
 if os.path.exists(os.path.join(BASE_DIR, 'local_settings.py')):
-    from versiontracker.local_settings import *
+    from local_settings import *
