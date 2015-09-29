@@ -24,7 +24,7 @@ class Packages(Resource):
         try:
             repository_packages = utils.get_packages_from_repo(repository)
         except KeyError as e:
-            return "{0} repository is not configured: {1}".format(repository, repr(e))
+            raise KeyError("{0} repository is not configured: {1}".format(repository, repr(e)))
 
         for repository_package in repository_packages:
             packages[repository_package.name] = {}
@@ -36,11 +36,11 @@ class Packages(Resource):
                 try:
                     return packages[package][property]
                 except KeyError as e:
-                    return "{0} for {1} is not in the list of packages: {2}".format(property, packages, repr(e))
+                    raise KeyError("{0} is not available in {1}: {2}".format(property, package, repr(e)))
 
             try:
                 return packages[package]
             except KeyError as e:
-                return "{0} is not in the list of packages: {1}".format(package, repr(e))
+                raise KeyError("{0} is not in the list of packages: {1}".format(package, repr(e)))
 
         return packages

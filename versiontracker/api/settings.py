@@ -24,11 +24,11 @@ class Repositories(Resource):
                 try:
                     return settings.REPOSITORIES[repository][param]
                 except KeyError as e:
-                    return "{0} is not configured in {1}: {2}".format(param, repository, repr(e))
+                    raise KeyError("{0} is not configured in {1}: {2}".format(param, repository, repr(e)))
             try:
                 return settings.REPOSITORIES[repository]
             except KeyError as e:
-                return "{0} is not configured: {1}".format(repository, repr(e))
+                raise KeyError("{0} is not configured: {1}".format(repository, repr(e)))
         return settings.REPOSITORIES
 
 
@@ -39,11 +39,11 @@ class Tags(Resource):
                 try:
                     return settings.TAGS[tag][param]
                 except KeyError as e:
-                    return "{0} is not configured in {1}: {2}".format(param, tag, repr(e))
+                    raise KeyError("{0} is not configured in {1}: {2}".format(param, tag, repr(e)))
             try:
                 return settings.TAGS[tag]
             except KeyError as e:
-                return "{0} is not configured: {1}".format(tag, repr(e))
+                raise KeyError("{0} is not configured: {1}".format(tag, repr(e)))
         return settings.TAGS
 
 
