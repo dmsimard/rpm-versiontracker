@@ -18,13 +18,13 @@ from versiontracker import settings
 
 
 class Repositories(Resource):
-    def get(self, repository=None, param=None):
+    def get(self, repository=None, property=None):
         if repository:
-            if param:
+            if property:
                 try:
-                    return settings.REPOSITORIES[repository][param]
+                    return settings.REPOSITORIES[repository][property]
                 except KeyError as e:
-                    raise KeyError("{0} is not configured in {1}: {2}".format(param, repository, repr(e)))
+                    raise KeyError("{0} is not configured in {1}: {2}".format(property, repository, repr(e)))
             try:
                 return settings.REPOSITORIES[repository]
             except KeyError as e:
@@ -33,13 +33,13 @@ class Repositories(Resource):
 
 
 class Tags(Resource):
-    def get(self, tag=None, param=None):
+    def get(self, tag=None, property=None):
         if tag:
-            if param:
+            if property:
                 try:
-                    return settings.TAGS[tag][param]
+                    return settings.TAGS[tag][property]
                 except KeyError as e:
-                    raise KeyError("{0} is not configured in {1}: {2}".format(param, tag, repr(e)))
+                    raise KeyError("{0} is not configured in {1}: {2}".format(property, tag, repr(e)))
             try:
                 return settings.TAGS[tag]
             except KeyError as e:
