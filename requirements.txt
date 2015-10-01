@@ -1,3 +1,4 @@
 flask
 flask-restful
 requests
+pbr>=1.6
