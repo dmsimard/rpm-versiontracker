@@ -1,21 +1,26 @@
-``rpm-versiontracker`` is a small, generic, [Flask](http://flask.pocoo.org/)
-web application that leverages the
-[DNF API](http://dnf.readthedocs.org/en/latest/index.html) to display the list
- of packages available from different repositories and compare them.
+About
+=====
+rpm-versiontracker_ is a small, generic, Flask_ web application that
+leverages the `DNF API`_ to display the list of packages available from
+different repositories and compare them.
 
-It provides a REST API to query it’s settings and return package lists so you
+It provides a REST API to query it's settings and return package lists so you
 can build and integrate around it.
 
 ``DNF`` is short for ``Dandified Yum``, the next generation of package
 management for Red Hat based distributions.
+
+.. _rpm-versiontracker: https://github.com/dmsimard/rpm-versiontracker
+.. _Flask: http://flask.pocoo.org/
+.. _DNF API: http://dnf.readthedocs.org/en/latest/index.html
 
 Use case
 ========
 The typical use case for this application is to monitor which version is in
 which repository.
 
-If you happen to have multiple mirrors for your packages (_ex: trunk, staging,
-production_), this tool could be useful.
+If you happen to have multiple mirrors for your packages (i.e: trunk, staging,
+production), this tool could be useful.
 
 We have created this application to be able to easily distinguish versions of
 the same packages across different repositories.
@@ -23,13 +28,16 @@ the same packages across different repositories.
 What it looks like
 ==================
 This application is currently used for following package versions across
-different Openstack repositories [here](http://versiontracker.dmsimard.com).
+different Openstack repositories here_.
+
+.. _here: http://versiontracker.dmsimard.com
 
 Documentation
 =============
 Documentation on the REST API, how to install, configure and run
-``rpm-versiontracker`` is available on
-[ReadTheDocs.org](http://rpm-versiontracker.readthedocs.org/en/latest/)
+``rpm-versiontracker`` is available on `ReadTheDocs.org`_
+
+.. _ReadTheDocks.org: http://rpm-versiontracker.readthedocs.org/en/latest/
 
 Author
 ======
