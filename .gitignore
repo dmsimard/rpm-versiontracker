@@ -2,3 +2,10 @@
 *.idea
 __pycache__/
 _build/
+build/
+*.egg
+*.egg-info
+dist
+build
+eggs
+.tox/
