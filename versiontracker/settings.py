@@ -13,7 +13,8 @@
 #   under the License.
 
 """
-Default settings showing versions of packages provided for two releases of Openstack.
+Default settings showing versions of packages provided for two releases of
+Openstack.
 You can override these settings with the local_settings.py file.
 """
 
@@ -26,8 +27,10 @@ TMPDIR = '/tmp/'
 # So we can know where we're loaded from
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-# An ordered dict is recommended to have a consistent display experience but is not required.
-# Adding a repository in the following format will make it available in the top menu automatically.
+# An ordered dict is recommended to have a consistent display experience but
+# is not required.
+# Adding a repository in the following format will make it available in the top
+# menu automatically.
 REPOSITORIES = collections.OrderedDict({
     'liberty-master': {
         'name': 'liberty-master',
@@ -51,8 +54,10 @@ REPOSITORIES = collections.OrderedDict({
     }
 })
 
-# An ordered dict is recommended to have a consistent display experience but is not required.
-# Adding a tag in the following format will make it available in the compare menu automatically.
+# An ordered dict is recommended to have a consistent display experience but is
+# not required.
+# Adding a tag in the following format will make it available in the compare
+# menu automatically.
 # A tag has to match at least two repositories to be useful.
 TAGS = collections.OrderedDict({
     'liberty': {
@@ -66,8 +71,9 @@ TAGS = collections.OrderedDict({
 })
 
 # http://dnf.readthedocs.org/en/latest/api_package.html
-PACKAGE_PROPERTIES = ['arch', 'buildtime', 'downloadsize', 'epoch', 'files', 'installtime', 'installsize', 'name',
-                  'release', 'sourcerpm', 'version']
+PACKAGE_PROPERTIES = ['arch', 'buildtime', 'downloadsize', 'epoch', 'files',
+                      'installtime', 'installsize', 'name', 'release',
+                      'sourcerpm', 'version']
 
 # Whether or not to show source packages as well
 SHOW_SOURCE_RPM = False

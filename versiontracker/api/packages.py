@@ -28,25 +28,33 @@ class Packages(Resource):
         try:
             repository_packages = _get_packages_from_repo(repository)
         except KeyError as e:
-            raise KeyError("{0} repository is not configured: {1}".format(repository, repr(e)))
+            msg = "{0} is not configured: {1}".format(repository, repr(e))
+            raise KeyError(msg)
 
         for repository_package in repository_packages:
-            package_index = "%s-%s" % (repository_package.name, repository_package.arch)
+            package_index = "{0}-{1}".format(repository_package.name,
+                                             repository_package.arch)
             packages[package_index] = {}
             for pkg_property in settings.PACKAGE_PROPERTIES:
-                packages[package_index][pkg_property] = getattr(repository_package, pkg_property)
+                packages[package_index][pkg_property] = \
+                    getattr(repository_package, pkg_property)
 
         if package:
             if property:
                 try:
                     return packages[package][property]
                 except KeyError as e:
-                    raise KeyError("{0} is not available in {1}: {2}".format(property, package, repr(e)))
+                    msg = "{0} is not available in {1}: {2}".format(property,
+                                                                    package,
+                                                                    repr(e))
+                    raise KeyError(msg)
 
             try:
                 return packages[package]
             except KeyError as e:
-                raise KeyError("{0} is not in the list of packages: {1}".format(package, repr(e)))
+                msg = "{0} is not in the list of packages: {1}".format(package,
+                                                                       repr(e))
+                raise KeyError(msg)
 
         return packages
 
@@ -69,7 +77,7 @@ def _fetch_base_urls(repository):
 
 def _get_packages_from_repo(repository):
     """
-    Uses the dnf API to fetch the list of all available packages off of a baseurl
+    Uses the dnf API to fetch the list of all available packages from a baseurl
     """
     base = dnf.Base()
     base_urls = _fetch_base_urls(repository)

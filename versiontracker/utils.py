@@ -21,8 +21,9 @@ from versiontracker.api.packages import Packages
 
 def diff_packages(repositories):
     """
-    Iterates over a list of packages dictionaries and highlights differences, if any.
-    Returns the same dictionary with an extra key to show if there are differences.
+    Iterates over a list of packages dictionaries and highlights differences,
+    if any. Returns the same dictionary with an extra key to show if there are
+    differences.
 
     Creates common keys for packages such as arch, package name and different.
     """
@@ -35,32 +36,41 @@ def diff_packages(repositories):
             if package not in packages:
                 packages[package] = collections.defaultdict(dict)
             for property in settings.PACKAGE_PROPERTIES:
-                packages[package][repository][property] = repository_packages[package][property]
+                value = repository_packages[package][property]
+                packages[package][repository][property] = value
 
     # Highlight package differences, if any
     for package in packages:
         compare_version = ""
         packages[package]['different'] = False
         for repository in repositories:
+            name = packages[package][repository]['name']
+            arch = packages[package][repository]['arch']
+            version = packages[package][repository]['version']
+            release = packages[package][repository]['release']
             try:
+                # Set common keys if they haven't been set up yet.
                 if not packages[package]['arch']:
-                    packages[package]['arch'] = packages[package][repository]['arch']
-                    packages[package]['name'] = packages[package][repository]['name']
+                    packages[package]['name'] = name
+                    packages[package]['arch'] = arch
             except KeyError:
                 pass
             try:
-                full_version = packages[package][repository]['version'] + packages[package][repository]['release']
+                full_version = version + release
             except KeyError:
-                # Package exists in at least one repository and doesn't exist in at least one repository
+                # Package exists in at least one repository and doesn't exist
+                # in at least one repository.
                 packages[package]['different'] = True
             if not compare_version:
                 # Establish a base for comparison
                 compare_version = full_version
             if compare_version == full_version:
-                # Version for this repository is identical to the last one compared against
+                # Version for this repository is identical to the last one
+                # compared against.
                 continue
             else:
-                # Version for this repository is not identical to the last one compared against
+                # Version for this repository is not identical to the last one
+                # compared against
                 packages[package]['different'] = True
 
     return packages

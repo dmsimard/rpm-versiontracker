@@ -19,7 +19,8 @@ from flask_restful import Api
 from versiontracker import utils
 
 from versiontracker.api.packages import Packages
-from versiontracker.api.settings import Repositories, Tags, PackageProperties, ShowSourceRpm
+from versiontracker.api.settings import Repositories
+from versiontracker.api.settings import Tags, PackageProperties, ShowSourceRpm
 
 app = Flask(__name__)
 api = Api(app)
@@ -27,7 +28,8 @@ api = Api(app)
 api.add_resource(Packages,
                  '/packages/<string:repository>',
                  '/packages/<string:repository>/<string:package>',
-                 '/packages/<string:repository>/<string:package>/<string:property>')
+                 '/packages/<string:repository>/<string:package>/'
+                 '<string:property>')
 api.add_resource(Repositories,
                  '/settings/repositories',
                  '/settings/repositories/<string:repository>',
@@ -65,8 +67,10 @@ default_settings = {
     'show_source_rpm': show_source_rpm
 }
 
+
 @app.route('/')
 def main():
+    """ Returns the home page """
     return render_template('home.html', **default_settings)
 
 
@@ -74,15 +78,21 @@ def main():
 def details(repository):
     """ Returns the list of packages for <repository> """
     packages = Packages().get(repository=repository)
-    return render_template('details.html', repository=repository, packages=packages, **default_settings)
+    return render_template('details.html', repository=repository,
+                           packages=packages, **default_settings)
 
 
 @app.route('/compare/<tag>')
 def compare(tag):
     """ Compares the versions across different repositories matching <tag> """
-    matched_repositories = [repository for repository in repositories if tag in repository]
+    matched_repositories = [repository for repository in repositories
+                            if tag in repository]
 
     # Match package versions for each release to highlight differences
     packages = utils.diff_packages(matched_repositories)
 
-    return render_template('compare.html', tag=tag, packages=packages, **default_settings)
+    return render_template('compare.html', tag=tag, packages=packages,
+                           **default_settings)
+
+if __name__ == '__main__':
+    app.run()
