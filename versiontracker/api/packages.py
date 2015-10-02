@@ -59,11 +59,11 @@ class Packages(Resource):
         return packages
 
 
-def _fetch_base_urls(repository):
+def _fetch_base_urls(repository_url):
     """
     Parses a ini-like repo file and returns the base urls
     """
-    repo_config = _url_as_ini_file(settings.REPOSITORIES[repository]['url'])
+    repo_config = _url_as_ini_file(repository_url)
     config = configparser.ConfigParser()
     config.read_file(repo_config)
 
@@ -80,7 +80,8 @@ def _get_packages_from_repo(repository):
     Uses the dnf API to fetch the list of all available packages from a baseurl
     """
     base = dnf.Base()
-    base_urls = _fetch_base_urls(repository)
+    url = settings.REPOSITORIES[repository]['url']
+    base_urls = _fetch_base_urls(url)
     for name, base_url in base_urls:
         repo = dnf.repo.Repo(name, settings.TMPDIR)
         repo.baseurl = [base_url]
