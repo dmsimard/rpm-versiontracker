@@ -35,9 +35,9 @@ different Openstack repositories here_.
 Documentation
 =============
 Documentation on the REST API, how to install, configure and run
-``rpm-versiontracker`` is available on `ReadTheDocs.org`_
+``rpm-versiontracker`` is available on ReadTheDocs.org_
 
-.. _ReadTheDocks.org: http://rpm-versiontracker.readthedocs.org/en/latest/
+.. _ReadTheDocs.org: http://rpm-versiontracker.readthedocs.org/en/latest/
 
 Author
 ======
