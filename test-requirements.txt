@@ -2,3 +2,5 @@ sphinx
 sphinxcontrib-httpdomain
 unittest2py3k
 mock
+discover
+flake8

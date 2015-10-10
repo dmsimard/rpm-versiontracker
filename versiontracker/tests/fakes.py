@@ -34,6 +34,7 @@ priority=1
 
 TWO_REPO_CONFIGS = REPO_CONFIG_ONE + REPO_CONFIG_TWO
 
+
 class FakeSettings(object):
     def __init__(self):
         self.REPOSITORIES = collections.OrderedDict({
