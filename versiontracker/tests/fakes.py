@@ -14,7 +14,7 @@
 
 import collections
 
-REPO_CONFIG_ONE = """
+REPO_CONFIG_ONE = u"""
 [repo-one]
 name=repo-one
 baseurl=http://example.org/one/x86_64/packages
@@ -23,7 +23,7 @@ gpgcheck=0
 priority=1
 """
 
-REPO_CONFIG_TWO = """
+REPO_CONFIG_TWO = u"""
 [repo-two]
 name=repo-two
 baseurl=http://example.org/two/x86_64/packages
@@ -33,6 +33,7 @@ priority=1
 """
 
 TWO_REPO_CONFIGS = REPO_CONFIG_ONE + REPO_CONFIG_TWO
+
 
 class FakeSettings(object):
     def __init__(self):

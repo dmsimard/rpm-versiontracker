@@ -13,7 +13,7 @@
 #   under the License.
 
 import collections
-import configparser
+import ConfigParser
 import dnf
 import io
 import requests
@@ -64,8 +64,8 @@ def _fetch_base_urls(repository_url):
     Parses a ini-like repo file and returns the base urls
     """
     repo_config = _url_as_ini_file(repository_url)
-    config = configparser.ConfigParser()
-    config.read_file(repo_config)
+    config = ConfigParser.SafeConfigParser()
+    config.readfp(repo_config)
 
     base_urls = list()
     for repo in config.sections():
