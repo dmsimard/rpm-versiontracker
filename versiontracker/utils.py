@@ -44,10 +44,13 @@ def diff_packages(repositories):
         compare_version = ""
         packages[package]['different'] = False
         for repository in repositories:
-            name = packages[package][repository]['name']
-            arch = packages[package][repository]['arch']
-            version = packages[package][repository]['version']
-            release = packages[package][repository]['release']
+            try:
+                name = packages[package][repository]['name']
+                arch = packages[package][repository]['arch']
+                version = packages[package][repository]['version']
+                release = packages[package][repository]['release']
+            except KeyError:
+                pass
             try:
                 # Set common keys if they haven't been set up yet.
                 if not packages[package]['arch']:
